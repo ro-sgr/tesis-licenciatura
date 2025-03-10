@@ -2,8 +2,8 @@ import numpy as np
 from scipy.special import erf
 from math import floor, log10
 
-d = np.array([0.44471812476789035, 0.5352716544572346, 0.1543000507808527]) # coeficientes de contracción
-a = np.array([0.16887939463273338, 0.6240343336327064, 3.4256944279866635]) # exponentes orbitales Gaussianos
+d = np.array([0.1545314772435472, 0.5354555247125108, 0.4443376735387033]) # coeficientes de contracción
+a = np.array([3.423766464751332, 0.6234266839478166, 0.1687830644383135]) # exponentes orbitales Gaussianos
 
 # distancia interatómica de 1.401 u.a.
 RA = np.array([0, 0, 0])
@@ -107,7 +107,7 @@ def Tmn(d : np.array, a : np.array, RA : np.array, RB : np.array):
     for p in range(k):
         for q in range(k):
             Mmn += d[p] * d[q] * Tpq(a[p], a[q], RA, RB) # elemento de matriz
-    return np.round(Mmn, vdecimal)
+    return Mmn
 
 #############################################
 ########## COULOMBIANA
@@ -167,7 +167,7 @@ def Vmn1(d : np.array, a : np.array, RA : np.array, RB : np.array, RC : np.array
             Mmn2 += factor * Vpq_AB(a[p], a[q], RA, RB, RC, ZC)
             Mmn3 += factor * Vpq_AB(a[p], a[q], RB, RB, RC, ZC)
     
-    return np.round([Mmn1, Mmn2, Mmn3], vdecimal) # elementos de matriz (V^i_AA, V^i_AB, V^i_BB)
+    return [Mmn1, Mmn2, Mmn3] # elementos de matriz (V^i_AA, V^i_AB, V^i_BB)
 
 #############################################
 ########## DOS ELECTRONES
