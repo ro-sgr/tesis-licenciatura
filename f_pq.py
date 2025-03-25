@@ -48,3 +48,9 @@ def Smn(d : np.array, a : np.array, RA : np.array, RB : np.array):
         for q in range(k):
             Mmn += d[p] * d[q] * Spq(a[p], a[q], RA, RB) # elemento de matriz
     return Mmn
+
+def truncar_float(valor : float, decimal : int):
+    """ Remueve los decimales de 'valor' después de la posición 'decimal'
+    """
+    factor = 10 ** decimal
+    return int(valor * factor) / factor
