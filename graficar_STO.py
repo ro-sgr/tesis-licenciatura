@@ -1,13 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def comparar_funcs(name:str, x:np.ndarray, f, g:list, N:list,
-                   labels:list, linestyle:list, linewidth:list,
-                   marker:list, markersize:list, color:list,
-                   xticks:list, yticks:list):
+def comparar_funcs(nombre:str, x:np.ndarray, f, g:list, N:list, labels:list, linestyle:list, linewidth:list, marker:list, markersize:list, color:list, xticks:list, yticks:list):
     """ Gráfica de una función principal f(x) y múltiples funciones gi(x)
 
-    name : nombre del archivo
+    nombre : nombre del archivo .svg
     x : dominio
     f : función principal
     g : lista de funciones a comparar
@@ -16,6 +13,7 @@ def comparar_funcs(name:str, x:np.ndarray, f, g:list, N:list,
         2do conjunto -> se consideran únicamente cada 'b' número de elementos
     (labels, linestyle, linewidth) : lista de (etiquetas, estilos de línea, grosor de línea) para las funciones gi(x)
     (marker, markersize, color) : lista de (marcador, tamaño de marcador, color) para las funciones gi(x)
+    (xticks, yticks) : 
     """
     fig, axs = plt.subplots(1, 2, figsize=(15, 5))  # 1 fila, 2 columnas, tamaño de figura (10, 5)
 
@@ -48,6 +46,6 @@ def comparar_funcs(name:str, x:np.ndarray, f, g:list, N:list,
         ax.legend(fontsize='xx-large', loc='upper right')
         ax.grid()
 
-    fig.subplots_adjust(wspace=0.25)
-    plt.savefig(f"imgs/{name}.svg", format="svg")
+    fig.subplots_adjust(wspace=0.25) # espacio entre figuras
+    plt.savefig(f"imgs/{nombre}.svg", format="svg")
     plt.show()

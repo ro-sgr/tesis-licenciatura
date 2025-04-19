@@ -2,8 +2,17 @@ import numpy as np
 from scipy.special import erf
 from math import floor, log10
 
+# Referencias.
+# [1] A. Szabo y N. S. Ostlund. Modern Quantum Chemistry. Introduction to Advanced Electronic Structure Theory. Dover Publications, 1989.
+# [2] T. Helgaker, P. Jørgensen y J. Olsen. Molecular Electronic-Structure Theory. John Wiley & Sons, Ltd, 2000.
+
+# Este trabajo
 d = np.array([0.1545314772435472, 0.5354555247125108, 0.4443376735387033]) # coeficientes de contracción
 a = np.array([3.423766464751332, 0.6234266839478166, 0.1687830644383135]) # exponentes orbitales Gaussianos
+
+# Szabo & Ostlund
+d_Szabo = np.array([0.444635, 0.535328, 0.154329])
+a_Szabo = np.array([0.168856, 0.623913, 3.42525])
 
 # distancia interatómica de 1.401 u.a.
 RA = np.array([0, 0, 0])
@@ -16,13 +25,13 @@ ZA, ZB = 1, 1
 ########## FACTORES
 #############################################
 
-def GaussNorm(a : int):
+def GaussNorm(a:int):
     """ Factor de normalización Gaussiano 1s
     a : exponente Gaussiano
     """
     return np.power(2*a/np.pi, 3/4)
 
-def arg(a : float, b : float, RA : np.array, RB : np.array):
+def arg(a:float, b:float, RA:np.ndarray, RB:np.ndarray):
     """ Argumento del factor pre-exponencial K
     
     (a, b) : exponente orbital Gaussiano
@@ -33,7 +42,7 @@ def arg(a : float, b : float, RA : np.array, RB : np.array):
     RAB2 = np.square(np.linalg.norm(RA-RB))
     return -mu*RAB2
 
-def K1(a : float, b : float, RA : np.array, RB : np.array):
+def K1(a:float, b:float, RA:np.ndarray, RB:np.ndarray):
     """ Factor pre-exponencial (integral 1 cuerpo)
     
     (a, b) : exponente orbital Gaussiano
@@ -41,7 +50,7 @@ def K1(a : float, b : float, RA : np.array, RB : np.array):
     """
     return np.exp(arg(a, b, RA, RB))
 
-def K2(a : float, b : float, c : float, d : float, RA : np.array, RB : np.array, RC : np.array, RD : np.array):
+def K2(a:float, b:float, c:float, d:float, RA:np.ndarray, RB:np.ndarray, RC:np.ndarray, RD:np.ndarray):
     """ Factor pre-exponencial (integral 2 cuerpos)
     
     (a, b, c, d) : exponente orbital Gaussiano
@@ -53,7 +62,7 @@ def K2(a : float, b : float, c : float, d : float, RA : np.array, RB : np.array,
 ########## TRASLAPE
 #############################################
 
-def Spq(a : float, b : float, RA : np.array, RB : np.array):
+def Spq(a:float, b:float, RA:np.ndarray, RB:np.ndarray):
     """ Integral de traslape S_pq (normalizada)
     
     (a, b) : exponente orbital Gaussiano
@@ -61,7 +70,7 @@ def Spq(a : float, b : float, RA : np.array, RB : np.array):
     """
     return GaussNorm(a) * GaussNorm(b) * np.power(np.pi/(a+b), 3/2) * K1(a, b, RA, RB)
 
-def Smn(d : np.array, a : np.array, RA : np.array, RB : np.array):
+def Smn(d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray):
     """ Integral de traslape total S_mn
     
     d : vector de coeficientes de expansión (d1, d2, ..., dk)
@@ -75,17 +84,11 @@ def Smn(d : np.array, a : np.array, RA : np.array, RB : np.array):
             Mmn += d[p] * d[q] * Spq(a[p], a[q], RA, RB) # elemento de matriz
     return Mmn
 
-SAA = Smn(d, a, RA, RA) # elemento de matriz S_AA y S_BB
-
-# cifra decimal a la cual se redondearán los elementos de matriz S
-# la cifra será del orden de magnitud del primer dígito diferente de cero para la condición de normalización
-vdecimal = abs(floor(log10(abs(float(SAA) % 1)))+1)
-
 #############################################
 ########## CINÉTICA
 #############################################
 
-def Tpq(a : np.array, b : np.array, RA : np.array, RB : np.array):
+def Tpq(a:np.ndarray, b:np.ndarray, RA:np.ndarray, RB:np.ndarray):
     """ Integral cinética S_mn (normalizada)
     
     d : vector de coeficientes de expansión (d1, d2, ..., dk)
@@ -95,7 +98,7 @@ def Tpq(a : np.array, b : np.array, RA : np.array, RB : np.array):
     RAB2 = np.square(np.linalg.norm(RA-RB))
     return (a*b)/(a+b) * (3 - 2*(a*b)/(a+b)*RAB2) * Spq(a, b, RA, RB)
 
-def Tmn(d : np.array, a : np.array, RA : np.array, RB : np.array):
+def Tmn(d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray):
     """ Integral cinética total S_mn
     
     d : vector de coeficientes de expansión (d1, d2, ..., dk)
@@ -113,14 +116,14 @@ def Tmn(d : np.array, a : np.array, RA : np.array, RB : np.array):
 ########## COULOMBIANA
 #############################################
 
-def F0(t : float):
+def F0(t:float):
     """ Función de Boys, n=0
     
     t : argumento de la función
     """
     return (1/2) * np.sqrt(np.pi/t) * erf(np.sqrt(t))
 
-def RP(a : float, b : float, RA : np.array, RB : np.array):
+def RP(a:float, b:float, RA:np.ndarray, RB:np.ndarray):
     """ Coordenada de centro de carga
     
     (a, b) : exponente orbital Gaussiano
@@ -129,7 +132,7 @@ def RP(a : float, b : float, RA : np.array, RB : np.array):
     p = a + b # exponente total
     return (a*RA+b*RB)/p
 
-def Vpq_AB(a : float, b : float, RA : np.array, RB : np.array, RC : np.array, ZC : float):
+def Vpq_AB(a:float, b:float, RA:np.ndarray, RB:np.ndarray, RC:np.ndarray, ZC:float):
     """ Integral coulombiana V_pq
     
     (a, b) : exponente orbital Gaussiano
@@ -147,7 +150,7 @@ def Vpq_AB(a : float, b : float, RA : np.array, RB : np.array, RC : np.array, ZC
         Vpq = factor * K1(a, b, RA, RB) * F0((a+b)*RPC2)
     return Vpq
 
-def Vmn1(d : np.array, a : np.array, RA : np.array, RB : np.array, RC : np.array, ZC : float):
+def Vmn1(d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray, RC:np.ndarray, ZC:float):
     """ Integral coulombiana total V_mn
     
     d : vector de coeficientes de expansión (d1, d2, ..., dk)
@@ -173,7 +176,7 @@ def Vmn1(d : np.array, a : np.array, RA : np.array, RB : np.array, RC : np.array
 ########## DOS ELECTRONES
 #############################################
 
-def ACBD(a : float, b : float, c : float, d : float, RA : np.array, RB : np.array, RC : np.array, RD : np.array):
+def ACBD(a:float, b:float, c:float, d:float, RA:np.ndarray, RB:np.ndarray, RC:np.ndarray, RD:np.ndarray):
     """ Integral de dos electrones (AC|BD)
     
     (a, b, c, d) : exponentes orbitales Gaussianos
@@ -202,7 +205,7 @@ def ACBD(a : float, b : float, c : float, d : float, RA : np.array, RB : np.arra
             term = factor * K2(a, b, c, d, RA, RB, RC, RD) * F0((a+c)*(b+d)/(a+b+c+d)*RPQ2)
         return term
 
-def V12(a : float, b : float, c : float, d : float, RA : np.array, RB : np.array, RC : np.array, RD : np.array):
+def V12(a:float, b:float, c:float, d:float, RA:np.ndarray, RB:np.ndarray, RC:np.ndarray, RD:np.ndarray):
     """ Integral de dos electrones total (normalizada)
         
     (a, b, c, d) : exponentes orbitales Gaussianos
@@ -214,7 +217,7 @@ def V12(a : float, b : float, c : float, d : float, RA : np.array, RB : np.array
     v12 = GaussNorm(a) * GaussNorm(b) * GaussNorm(c) * GaussNorm(d) * ACBD(a, b, c, d, RA, RB, RC, RD)
     return v12
 
-def Vmn2(d : np.array, a : np.array, RA : np.array, RB : np.array, RC : np.array, RD : np.array):
+def Vmn2(d :np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray, RC:np.ndarray, RD:np.ndarray):
     """ Elemento de matriz de interacción de dos electrones
 
     d : vector de coeficientes de expansión (d1, d2, ..., dk)
@@ -234,7 +237,15 @@ def Vmn2(d : np.array, a : np.array, RA : np.array, RB : np.array, RC : np.array
 ########## COEF. DE NORMALIZACIÓN
 #############################################
 
-def cPM(d: np.array, a: np.array, RA: np.array, RB: np.array, signo : int):
+def vdecimal(d:np.ndarray, a:np.ndarray, RA:np.ndarray):
+    """ Cifra decimal a la cual se redondearán los elementos de matriz S
+    La cifra será del orden de magnitud del primer dígito diferente de cero para la condición de normalización
+    """
+    SAA = Smn(d, a, RA, RA) # elemento de matriz S_AA y S_BB
+    valor = abs(floor(log10(abs(float(SAA) % 1)))+1)
+    return valor
+
+def cPM(d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray, signo:int):
     """ Constante de normalización c+-
             Psi = c+- (Phi_A +- Phi_B)
             
@@ -245,16 +256,17 @@ def cPM(d: np.array, a: np.array, RA: np.array, RB: np.array, signo : int):
          1 -> positivo
         -1 -> negativo
     """
-    S = Smn(d, a, RA, RB)
-    ord_mag = np.power(10,vdecimal)
-    S = np.trunc(S*ord_mag)/ord_mag # truncar S hasta el primer decimal diferente de cero para S_AA
-    return 1/np.sqrt(2*(1+signo*S))
+    decimal = vdecimal(d, a, RA)
+    ord_mag = np.power(10, decimal)
+    
+    S = np.trunc(Smn(d, a, RA, RB) * ord_mag) / ord_mag # truncar S hasta el primer decimal diferente de cero para S_AA
+    return 1/np.sqrt(2*(1 + signo*S))
 
 #############################################
 ########## f_pq
 #############################################
         
-def fpp(p : int, d : np.array, a : np.array, RA : np.array, RB : np.array, ZA : float, ZB : float):
+def fpp(p:int, d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray, ZA:float, ZB:float):
     """ Elemento de matriz f_pp
     
     p : elemento de la base, base = {X_1, X_2, X_3, X_4}
@@ -278,7 +290,7 @@ def fpp(p : int, d : np.array, a : np.array, RA : np.array, RB : np.array, ZA : 
 ########## g_pqrs
 #############################################
 
-def gpqrs(P : np.array, d : np.array, a : np.array, RA : np.array, RB : np.array):
+def gpqrs(P:np.ndarray, d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray):
     """ Elemento de matriz g_pqrs
     
     P : vector de elementos de la base, P = (p,q,r,s)

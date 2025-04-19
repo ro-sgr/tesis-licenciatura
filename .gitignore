@@ -8,3 +8,6 @@ __pycache__/
 # IPython
 profile_default/
 ipython_config.py
+
+# IBM API Token
+ibm_token.txt
