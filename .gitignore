@@ -11,3 +11,7 @@ ipython_config.py
 
 # IBM API Token
 ibm_token.txt
+ibm_CRN.txt
+
+# Other stuff
+imgs/*
