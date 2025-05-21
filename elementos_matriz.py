@@ -7,16 +7,16 @@ from math import floor, log10
 # [2] T. Helgaker, P. Jørgensen y J. Olsen. Molecular Electronic-Structure Theory. John Wiley & Sons, Ltd, 2000.
 
 # Este trabajo
-d = np.array([0.1545314772435472, 0.5354555247125108, 0.4443376735387033]) # coeficientes de contracción
-a = np.array([3.423766464751332, 0.6234266839478166, 0.1687830644383135]) # exponentes orbitales Gaussianos
+d = np.array([0.15435632562422885, 0.444478865152913, 0.5354614463967469]) # coeficientes de contracción
+a = np.array([3.4247876599193847, 0.1688098626159274, 0.6237655471058411]) # exponentes orbitales Gaussianos
 
 # Szabo & Ostlund
 d_Szabo = np.array([0.444635, 0.535328, 0.154329])
 a_Szabo = np.array([0.168856, 0.623913, 3.42525])
 
-# distancia interatómica de 1.401 u.a.
+# distancia interatómica de 1.4 u.a.
 RA = np.array([0, 0, 0])
-RB = np.array([1.401, 0, 0])
+RB = np.array([1.4, 0, 0])
 
 # carga nuclear
 ZA, ZB = 1, 1
