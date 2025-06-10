@@ -6,13 +6,18 @@ from math import floor, log10
 # [1] A. Szabo y N. S. Ostlund. Modern Quantum Chemistry. Introduction to Advanced Electronic Structure Theory. Dover Publications, 1989.
 # [2] T. Helgaker, P. Jørgensen y J. Olsen. Molecular Electronic-Structure Theory. John Wiley & Sons, Ltd, 2000.
 
-# Este trabajo
-d = np.array([0.15435632562422885, 0.444478865152913, 0.5354614463967469]) # coeficientes de contracción
-a = np.array([3.4247876599193847, 0.1688098626159274, 0.6237655471058411]) # exponentes orbitales Gaussianos
-
 # Szabo & Ostlund
 d_Szabo = np.array([0.444635, 0.535328, 0.154329])
 a_Szabo = np.array([0.168856, 0.623913, 3.42525])
+
+# Este trabajo
+data = np.loadtxt("data/STO3G.csv", delimiter=",", usecols=(0,1), dtype=('str')) # cargar valores calculados
+valores = dict()
+for valor in data:
+    valores[str(valor[0])] = float(valor[1])
+    
+d = np.array([valores['d1'], valores['d2'], valores['d3']]) # coeficientes de contracción
+a = np.array([valores['a1_2'], valores['a2_2'], valores['a3_2']]) # exponentes orbitales Gaussianos
 
 # distancia interatómica de 1.4 u.a.
 RA = np.array([0, 0, 0])
@@ -89,7 +94,7 @@ def Smn(d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray):
 #############################################
 
 def Tpq(a:np.ndarray, b:np.ndarray, RA:np.ndarray, RB:np.ndarray):
-    """ Integral cinética S_mn (normalizada)
+    """ Integral cinética T_pq (normalizada)
     
     d : vector de coeficientes de expansión (d1, d2, ..., dk)
     a : vector de exponentes orbitales Gaussianos (a1, a2, ..., ak)
@@ -99,7 +104,7 @@ def Tpq(a:np.ndarray, b:np.ndarray, RA:np.ndarray, RB:np.ndarray):
     return (a*b)/(a+b) * (3 - 2*(a*b)/(a+b)*RAB2) * Spq(a, b, RA, RB)
 
 def Tmn(d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray):
-    """ Integral cinética total S_mn
+    """ Integral cinética total T_mn
     
     d : vector de coeficientes de expansión (d1, d2, ..., dk)
     a : vector de exponentes orbitales Gaussianos (a1, a2, ..., ak)

@@ -6,13 +6,18 @@ from math import floor, log10
 # [1] A. Szabo y N. S. Ostlund. Modern Quantum Chemistry. Introduction to Advanced Electronic Structure Theory. Dover Publications, 1989.
 # [2] T. Helgaker, P. Jørgensen y J. Olsen. Molecular Electronic-Structure Theory. John Wiley & Sons, Ltd, 2000.
 
-# Este trabajo
-d = np.array([0.1545314772435472, 0.5354555247125108, 0.4443376735387033]) # coeficientes de contracción
-a = np.array([3.423766464751332, 0.6234266839478166, 0.1687830644383135]) # exponentes orbitales Gaussianos
-
 # Szabo & Ostlund
 d_Szabo = np.array([0.444635, 0.535328, 0.154329])
 a_Szabo = np.array([0.168856, 0.623913, 3.42525])
+
+# Este trabajo
+data = np.loadtxt("data/STO3G.csv", delimiter=",", usecols=(0,1), dtype=('str')) # cargar valores calculados
+valores = dict()
+for valor in data:
+    valores[str(valor[0])] = float(valor[1])
+    
+d = np.array([valores['d1'], valores['d2'], valores['d3']]) # coeficientes de contracción
+a = np.array([valores['a1_2'], valores['a2_2'], valores['a3_2']]) # exponentes orbitales Gaussianos
 
 def GaussNorm(a:int):
     """
