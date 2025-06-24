@@ -37,7 +37,7 @@ def compararSTO(nombre:str, formato:str, ref:dict, datasets:list, xticks:list, y
     axs[1].set_yticks(yticks[1])
 
     for ax in axs:
-        ax.set_xlabel('Radio (u.a.)', fontsize='xx-large', labelpad=10)
+        ax.set_xlabel('Radio ($a_0$)', fontsize='xx-large', labelpad=10)
         ax.tick_params(axis='both', which='major', labelsize='xx-large')
         ax.legend(fontsize='xx-large', loc='upper right')
         ax.grid()
