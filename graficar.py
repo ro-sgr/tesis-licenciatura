@@ -1,3 +1,5 @@
+# Script para realizar diversas gráficas comparativas e ilustrativas a lo largo del trabajo presente
+
 import numpy as np
 import matplotlib.pyplot as plt
 
