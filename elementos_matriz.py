@@ -4,6 +4,36 @@
 from g_pqrs import *
 from extras import *
 
+def un_cuerpo(d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray, ZA:int, ZB:int) -> list:
+    """ Integrales de un solo cuerpo para H2 con la base STO-3G
+
+    Parámetros
+        d: vector de coeficientes de contracción
+        a: vector de exponentes orbitales gaussianos
+        (RA, RB): coord. del núcleo (A, B)
+        (ZA, ZB): carga del núcleo (A, B)
+    """
+    f11 = fpp(1, d, a, RA, RB, ZA, ZB) # h11 energía cinética (orbital ligante)
+    f33 = fpp(3, d, a, RA, RB, ZA, ZB) # h22 energía cinética (orbital antiligante)
+    return f11, f33
+
+
+def dos_cuerpos(d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray, ZA:int, ZB:int) -> list:
+    """ Integrales de dos cuerpos para H2 con la base STO-3G
+
+    Parámetros
+        d: vector de coeficientes de contracción
+        a: vector de exponentes orbitales gaussianos
+        (RA, RB): coord. del núcleo (A, B)
+        (ZA, ZB): carga del núcleo (A, B)
+    """
+    g1212 = gpqrs([1,2,1,2], d, a, RA, RB) # término Coulombiano J11
+    g3434 = gpqrs([3,4,3,4], d, a, RA, RB) # término Coulombiano J22
+    g1313 = gpqrs([1,3,1,3], d, a, RA, RB) # término Coulombiano J12
+    g1331 = gpqrs([1,3,3,1], d, a, RA, RB) # término Coulombiano K12 (intercambio)
+    return g1212, g3434, g1313, g1331
+
+
 def elementos_matriz(d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray, ZA:int, ZB:int) -> list:
     """ Elementos de matriz para H2 con la base STO-3G
 
@@ -14,14 +44,10 @@ def elementos_matriz(d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray, Z
         (ZA, ZB): carga del núcleo (A, B)
     """
     # elementos de un cuerpo
-    f11 = fpp(1, d, a, RA, RB, ZA, ZB) # h11 energía cinética (orbital ligante)
-    f33 = fpp(3, d, a, RA, RB, ZA, ZB) # h22 energía cinética (orbital antiligante)
+    f11, f33 = un_cuerpo(d, a, RA, RB, ZA, ZB)
     # elementos de dos cuerpos
-    g1212 = gpqrs([1,2,1,2], d, a, RA, RB) # término Coulombiano J11
-    g3434 = gpqrs([3,4,3,4], d, a, RA, RB) # término Coulombiano J22
-    g1313 = gpqrs([1,3,1,3], d, a, RA, RB) # término Coulombiano J12
-    g1331 = gpqrs([1,3,3,1], d, a, RA, RB) # término Coulombiano K12 (intercambio)
-
+    g1212, g3434, g1313, g1331 = dos_cuerpos(d, a, RA, RB, ZA, ZB)
+    
     return f11, f33, g1212, g3434, g1313, g1331
 
 

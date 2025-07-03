@@ -1,3 +1,5 @@
+import numpy as np
+
 def guardar(nombre:str, data:list) -> None:
     """ Guardar lista de datos
 
@@ -8,3 +10,12 @@ def guardar(nombre:str, data:list) -> None:
         file.write(f"{nombre}\n")
         for item in data:
             file.write(f"{item}\n")
+
+
+def cargar(nombre:str) -> np.ndarray:
+    """ Cargar conjunto de datos
+
+    nombre: nombre del archivo
+    """
+    data = np.loadtxt(f"data/{nombre}.csv", delimiter=",", dtype=('float'), skiprows=1)
+    return data
