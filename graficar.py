@@ -41,12 +41,12 @@ def compararSTO(nombre:str, formato:str, ref:dict, datasets:list, xticks:list, y
     for ax in axs:
         ax.set_xlabel('Radio ($a_0$)', fontsize='xx-large', labelpad=10)
         ax.tick_params(axis='both', which='major', labelsize='xx-large')
-        ax.legend(fontsize='xx-large', loc='upper right')
-        ax.grid()
+        ax.legend(fontsize=15, loc='upper right')
+        ax.grid(alpha=alpha, which='both')
 
     fig.subplots_adjust(wspace=0.25)
     if nombre is not None: # guardar
-        plt.savefig(f"imgs/{nombre}.{formato}", format=f"{formato}")
+        fig.savefig(f"imgs/{nombre}.{formato}", format=f"{formato}", bbox_inches='tight')
     plt.show()
 
 
