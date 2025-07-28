@@ -20,7 +20,7 @@ Los cuadernos de Jupyter (`.ipynb`) explican a detalle el cómo calcular los ele
 
 ### Scripts
 
-El directorio `H2` se trata de una paquetería la cual contiene todos los scripts (archivos `.py`) con el código de los cuadernos de Jupyter. Cada archivo `lipsum.py` en el directorio `H2` corresponde al cuaderno de Jupyter `(#) lipsum.ipynb`. Ningún script fue escrito pensado para correrse de manera independiente, sino para ser importados a los cuadernos de Jupyter.
+El directorio `H2` se trata de una paquetería la cual contiene todos los scripts (archivos `.py`) con el código de los cuadernos de Jupyter. Cada archivo `lipsum.py` en el directorio `H2` corresponde al cuaderno de Jupyter `(#) lipsum.ipynb`. Ningún script fue escrito pensado para correrse de manera independiente, sino para ser importados desde los cuadernos de Jupyter.
 
 ### Otros
 

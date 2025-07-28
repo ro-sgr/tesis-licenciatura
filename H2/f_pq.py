@@ -1,5 +1,5 @@
 # Script para el cálculo de elementos de un cuerpo
-# Molécula de hidrógeno STO-3G
+# Molécula de hidrógeno, STO-3G
 
 import numpy as np
 from numpy.typing import NDArray # type annotation
@@ -20,10 +20,10 @@ d_Szabo = np.array([0.444635, 0.535328, 0.154329])
 a_Szabo = np.array([0.168856, 0.623913, 3.42525])
 
 # Este trabajo
-data = np.loadtxt("data/STO3G.csv", delimiter=",", usecols=(0,1), dtype=('str')) # cargar valores calculados
+data = np.loadtxt("data/STO3G.csv", delimiter = ",", usecols = (0,1), dtype = ('str'), skiprows = 1) # cargar valores calculados
 valores = dict()
-for valor in data:
-    valores[str(valor[0])] = float(valor[1])
+for coef in data:
+    valores[str(coef[0])] = float(coef[1])
     
 d = np.array([valores['d1'], valores['d2'], valores['d3']]) # coeficientes de contracción
 a = np.array([valores['a1_2'], valores['a2_2'], valores['a3_2']]) # exponentes orbitales Gaussianos
@@ -203,7 +203,6 @@ def Vmn1(d: NDArray, a: NDArray, RA: NDArray, RB: NDArray, RC: NDArray, ZC: floa
     
     return Mmn1, Mmn2, Mmn3 # elementos de matriz V^i_AA, V^i_AB, V^i_BB
 
-
 #############################################
 ########## Correcciones decimales
 #############################################
@@ -218,13 +217,11 @@ def decimal_no_cero(valor: float | NDArray) -> int:
     #     decimal: int = abs(int(np.floor(np.log10(np.abs(valor)))))
 
     try:
-        decimal: int = abs(floor(log10(abs(float(valor) % 1))) + 1)
+        decimal: int = abs(floor(log10(abs(valor) % 1)) + 1)
     except ValueError:
         decimal: int = 0
         
     return decimal
-
-
 
 
 def valor_truncado(valor: float | float | NDArray, decimal: int) -> float:
