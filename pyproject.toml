@@ -1,0 +1,14 @@
+[project]
+name = "tesis-licenciatura"
+version = "0.1.0"
+description = "configuracion para codigo de tesis de licenciatura"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "matplotlib>=3.10.3",
+    "numpy>=2.3.2",
+    "qiskit>=2.1.1",
+    "qiskit-aer>=0.17.1",
+    "qiskit-ibm-runtime>=0.40.1",
+    "scipy>=1.16.1",
+]
