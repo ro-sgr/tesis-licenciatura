@@ -1,10 +1,10 @@
 # Script para el cálculo de elementos de uno y dos cuerpos
 # Molécula de hidrógeno STO-3G
 
-from g_pqrs import *
-from extras import *
+from .g_pqrs import *
+from .utils import guardar, cargar
 
-def un_cuerpo(d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray, ZA:int, ZB:int) -> list:
+def un_cuerpo(d: np.ndarray, a: np.ndarray, RA: np.ndarray, RB: np.ndarray, ZA: int, ZB: int) -> list[np.float64]:
     """ Integrales de un solo cuerpo para H2 con la base STO-3G
 
     Parámetros
@@ -13,12 +13,12 @@ def un_cuerpo(d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray, ZA:int, 
         (RA, RB): coord. del núcleo (A, B)
         (ZA, ZB): carga del núcleo (A, B)
     """
-    f11 = fpp(1, d, a, RA, RB, ZA, ZB) # h11 energía cinética (orbital ligante)
-    f33 = fpp(3, d, a, RA, RB, ZA, ZB) # h22 energía cinética (orbital antiligante)
+    f11: np.float64 = fpp(1, d, a, RA, RB, ZA, ZB) # h11 energía cinética (orbital ligante)
+    f33: np.float64 = fpp(3, d, a, RA, RB, ZA, ZB) # h22 energía cinética (orbital antiligante)
     return f11, f33
 
 
-def dos_cuerpos(d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray, ZA:int, ZB:int) -> list:
+def dos_cuerpos(d: np.ndarray, a: np.ndarray, RA: np.ndarray, RB: np.ndarray, ZA: int, ZB: int) -> list[np.float64]:
     """ Integrales de dos cuerpos para H2 con la base STO-3G
 
     Parámetros
@@ -27,14 +27,14 @@ def dos_cuerpos(d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray, ZA:int
         (RA, RB): coord. del núcleo (A, B)
         (ZA, ZB): carga del núcleo (A, B)
     """
-    g1212 = gpqrs([1,2,1,2], d, a, RA, RB) # término Coulombiano J11
-    g3434 = gpqrs([3,4,3,4], d, a, RA, RB) # término Coulombiano J22
-    g1313 = gpqrs([1,3,1,3], d, a, RA, RB) # término Coulombiano J12
-    g1331 = gpqrs([1,3,3,1], d, a, RA, RB) # término Coulombiano K12 (intercambio)
+    g1212: np.float64 = gpqrs([1,2,1,2], d, a, RA, RB) # término Coulombiano J11
+    g3434: np.float64 = gpqrs([3,4,3,4], d, a, RA, RB) # término Coulombiano J22
+    g1313: np.float64 = gpqrs([1,3,1,3], d, a, RA, RB) # término Coulombiano J12
+    g1331: np.float64 = gpqrs([1,3,3,1], d, a, RA, RB) # término Coulombiano K12 (intercambio)
     return g1212, g3434, g1313, g1331
 
 
-def elementos_matriz(d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray, ZA:int, ZB:int) -> list:
+def elementos_matriz(d: np.ndarray, a: np.ndarray, RA: np.ndarray, RB: np.ndarray, ZA: int, ZB: int) -> list[np.float64]:
     """ Elementos de matriz para H2 con la base STO-3G
 
     Parámetros
@@ -51,7 +51,7 @@ def elementos_matriz(d:np.ndarray, a:np.ndarray, RA:np.ndarray, RB:np.ndarray, Z
     return f11, f33, g1212, g3434, g1313, g1331
 
 
-def elementos_matriz_distancias(inicio:float, fin:float, paso:float, d:np.ndarray, a:np.ndarray, ZA:int, ZB:int) -> list:
+def elementos_matriz_distancias(inicio: float, fin: float, paso: float, d: np.ndarray, a: np.ndarray, ZA: int, ZB: int) -> list[np.float64]:
     """ Lista de elementos de matriz de H2 con la base STO-3G para
     diversas distancias internucleares en el intervalo (inicio, fin)
     con incrementos de 'paso' 
@@ -65,9 +65,9 @@ def elementos_matriz_distancias(inicio:float, fin:float, paso:float, d:np.ndarra
     """
     h11, h22, J11, J22, J12, K12, hnuc = [], [], [], [], [], [], []
 
-    distancias = np.arange(inicio, fin, paso) # distancias internucleares
-    decimal = len(str(paso).split('.')[1]) # número de decimales en el paso
-    distancias = np.round(distancias, decimal) # remover error numérico redondeando al número de decimales previsto
+    distancias: np.ndarray = np.arange(inicio, fin, paso) # distancias internucleares
+    decimal: int = len(str(paso).split('.')[1]) # número de decimales en el paso
+    distancias: np.ndarray = np.round(distancias, decimal) # remover error numérico redondeando al número de decimales previsto
     # En esto último se asume que 'inicio', 'fin' y 'paso' tienen a lo más el mismo número de cifrar decimales
     
     for x in distancias:
@@ -89,8 +89,8 @@ def elementos_matriz_distancias(inicio:float, fin:float, paso:float, d:np.ndarra
     return distancias, h11, h22, J11, J22, J12, K12, hnuc
 
 
-def elementos_H2(modo: str = 'cargar', intervalo: list = None):
-    """ Cargar o calcular elementos de matriz para H2
+def elementos_H2(modo: str = 'cargar', intervalo: list = None) -> list[np.float64]:
+    """ Cargar o calcular elementos de matriz para H2 dado un cierto intervalo
 
     Parámetros
         modo:
@@ -102,15 +102,16 @@ def elementos_H2(modo: str = 'cargar', intervalo: list = None):
     """
     # cargar elementos de matriz h11, h22, J11, J22, J12, K12 y hnuc
     if modo == 'cargar':
-        distancias = np.loadtxt("data/H2_distancias.csv", delimiter=",", dtype=('float'), skiprows=1)
-        h11 = np.loadtxt("data/H2_h11.csv", delimiter=",", dtype=('float'), skiprows=1)
-        h22 = np.loadtxt("data/H2_h22.csv", delimiter=",", dtype=('float'), skiprows=1)
-        J11 = np.loadtxt("data/H2_J11.csv", delimiter=",", dtype=('float'), skiprows=1)
-        J22 = np.loadtxt("data/H2_J22.csv", delimiter=",", dtype=('float'), skiprows=1)
-        J12 = np.loadtxt("data/H2_J12.csv", delimiter=",", dtype=('float'), skiprows=1)
-        K12 = np.loadtxt("data/H2_K12.csv", delimiter=",", dtype=('float'), skiprows=1)
-        hnuc = np.loadtxt("data/H2_hnuc.csv", delimiter=",", dtype=('float'), skiprows=1)
+        distancias: np.array = np.loadtxt("data/H2_distancias.csv", delimiter=",", dtype=('float'), skiprows=1)
+        h11: np.array = np.loadtxt("data/H2_h11.csv", delimiter=",", dtype=('float'), skiprows=1)
+        h22: np.array = np.loadtxt("data/H2_h22.csv", delimiter=",", dtype=('float'), skiprows=1)
+        J11: np.array = np.loadtxt("data/H2_J11.csv", delimiter=",", dtype=('float'), skiprows=1)
+        J22: np.array = np.loadtxt("data/H2_J22.csv", delimiter=",", dtype=('float'), skiprows=1)
+        J12: np.array = np.loadtxt("data/H2_J12.csv", delimiter=",", dtype=('float'), skiprows=1)
+        K12: np.array = np.loadtxt("data/H2_K12.csv", delimiter=",", dtype=('float'), skiprows=1)
+        hnuc: np.array = np.loadtxt("data/H2_hnuc.csv", delimiter=",", dtype=('float'), skiprows=1)
         print("Elementos de matriz y distancias interatómicas cargadas.")
+        
     # calcular elementos de matriz h11, h22, J11, J22, J12, K12 y hnuc
     elif modo == 'calcular':
         inicio, fin, paso = intervalo
@@ -128,3 +129,4 @@ def elementos_H2(modo: str = 'cargar', intervalo: list = None):
         print("Elementos de matriz y distancias interatómicas guardadas en el directorio 'data'.")
         
     return distancias, h11, h22, J11, J22, J12, K12, hnuc
+	
