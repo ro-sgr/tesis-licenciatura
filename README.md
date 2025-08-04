@@ -1,7 +1,9 @@
-<p align="left" style="width: 100%">
-    <img src="imgs/Escudo-UNAM.svg" alt="Left" style="float: left; width: 10%"/>
-    <img src="imgs/Escudo-FC.svg" alt="Left" style="float: right; width: 10%"/>
-</p>
+<table>
+    <tr>
+        <td><img src="imgs/Logo_FC.jpg" alt="Left" style="float: center; width: 70%"/></td>
+        <td><img src="imgs/Logo_IF.jpg" alt="Left" style="float: right; width: 30%"/></td>
+    </tr>
+</table>
 
 <h2 style="text-align: center;"><b>Teoría y Computación Cuántica para Sistemas Moleculares: Un Estudio desde la Molécula de Hidrógeno</b></h2>
 
@@ -19,7 +21,7 @@ Ciudad Universitaria, CDMX, 2025
 
 ---
 
-## Estructura
+## Estructura del código
 
 ### Cuadernos de Jupyter
 
