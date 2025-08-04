@@ -1,5 +1,10 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -8,10 +13,6 @@ __pycache__/
 # IPython
 profile_default/
 ipython_config.py
-
-# IBM API Token
-ibm_token.txt
-ibm_CRN.txt
 
 # Virtual environment
 .venv

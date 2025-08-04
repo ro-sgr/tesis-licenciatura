@@ -20,7 +20,7 @@ d_Szabo = np.array([0.444635, 0.535328, 0.154329])
 a_Szabo = np.array([0.168856, 0.623913, 3.42525])
 
 # Este trabajo
-data = np.loadtxt("data/STO3G.csv", delimiter = ",", usecols = (0,1), dtype = ('str'), skiprows = 1) # cargar valores calculados
+data = np.loadtxt("data/H2_STO3G.csv", delimiter = ",", usecols = (0,1), dtype = ('str'), skiprows = 1) # cargar valores calculados
 valores = dict()
 for coef in data:
     valores[str(coef[0])] = float(coef[1])

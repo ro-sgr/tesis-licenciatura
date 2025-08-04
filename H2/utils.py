@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.typing import NDArray # type annotation
 
 def guardar(nombre: str, data: list) -> None:
     """ Guardar lista de datos
@@ -13,11 +14,13 @@ def guardar(nombre: str, data: list) -> None:
             file.write(f"{item}\n")
 
 
-def cargar(nombre: str) -> np.ndarray[np.float64]:
+def cargar(nombre: str,
+           usecols: int|tuple[int] = None,
+           unpack: bool = True) -> NDArray[float]:
     """ Cargar conjunto de datos
 
     Parámetro
         nombre : nombre del archivo
     """
-    return np.loadtxt(f"data/{nombre}.csv", delimiter=",", dtype=('float'), skiprows=1)
+    return np.loadtxt(f"data/{nombre}.csv", dtype=('float'), delimiter=",", skiprows=1, usecols=usecols, unpack=unpack)
 	
