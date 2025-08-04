@@ -23,7 +23,7 @@ Ciudad Universitaria, CDMX, 2025
 
 ### Cuadernos de Jupyter
 
-Los cuadernos de Jupyter (`.ipynb`) explican a detalle el cómo calcular los elementos para la base STO-3G, así como los elementos de matriz $f_{pq}\,$ y $\,g_{pqrs}$. Todo esto para la molécula de hidrógeno.
+Los cuadernos de Jupyter (`.ipynb`) explican a detalle el cómo calcular los elementos para la base STO-3G, así como los elementos de matriz $f_{pq}$ y $g_{pqrs}$. Todo esto para la molécula de hidrógeno.
 
 `(1) STO-3G.ipynb` Cálculo de los parámetros óptimos para STO-3G.
 
@@ -46,6 +46,8 @@ El directorio `H2` se trata de una paquetería la cual contiene todos los script
 `data/` contiene archivos `.csv` con diversos conjuntos de datos calculados y empleados a lo largo del código.
 
 ## Configuración
+
+El código empleado usa el lenguaje de programación Python v3.13.5
 
 1. Instalar **uv** (`pip install uv==0.8.3`)¹
 
