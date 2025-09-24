@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def graficarVQE(nombre: str, ref: dict, datasets: list):
+def graficar_VQE(nombre: str, ref: dict, datasets: list):
     """ Gráfica de datos obtenidos para el VQE (unidades atómicas y Angstroms)
 
     nombre : nombre del archivo .svg (si 'None' no se guarda la gráfica)

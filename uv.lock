@@ -763,7 +763,7 @@ requires-dist = [
     { name = "matplotlib", specifier = "==3.10.3" },
     { name = "numpy", specifier = "==2.3.2" },
     { name = "qiskit", specifier = "==1.4.2" },
-    { name = "qiskit-aer", specifier = ">=0.17.1" },
+    { name = "qiskit-aer", specifier = "==0.17.1" },
     { name = "qiskit-ibm-runtime", specifier = "==0.40.1" },
     { name = "qiskit-nature", specifier = "==0.7.2" },
     { name = "scipy", specifier = "==1.16.1" },

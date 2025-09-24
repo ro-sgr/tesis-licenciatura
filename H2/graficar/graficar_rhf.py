@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 
 def graficar_RHF(R: NDArray, y: list[NDArray], EH: NDArray, opciones, guardar_img: bool = False, nombre: str = 'RHF') -> None:
-    """ Graficar elementos de matriz para H2
+    """ Graficar energía RHF para H2
 
     Parámetros
         R : distancia interatómica
