@@ -30,7 +30,7 @@ def fpp(p: int, d: NDArray, a: NDArray, RA: NDArray, RB: NDArray, ZA: float, ZB:
 
     V1_AA, V1_AB, V1_BB = Vmn1(d, a, RA, RB, RA, ZA) # elementos de matriz V^1_AA, V^1_AB y V^1_BB
     V2_AA, V2_AB, V2_BB = Vmn1(d, a, RA, RB, RB, ZB) # elementos de matriz V^2_AA, V^2_AB y V^2_BB
-
+    
     # corrección decimal términos Coulombianos
     decimal: int = decimal_no_cero(V1_AB - V2_AB) # primer cifra decimal diferente de cero para V1_AB
     

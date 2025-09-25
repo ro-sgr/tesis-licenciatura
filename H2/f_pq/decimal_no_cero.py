@@ -10,7 +10,7 @@ import numpy as np
 from numpy.typing import NDArray # type annotation
 
 
-def decimal_no_cero(valor: float | NDArray) -> int:
+def decimal_no_cero(valor: float) -> int:
     """ Devuelve la posición decimal del primer dígito diferente de cero de un cierto 'valor'
     """
     # if valor == 0:

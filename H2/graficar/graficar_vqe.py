@@ -20,6 +20,8 @@ def graficar_VQE(nombre: str, ref: dict, datasets: list):
     datasets -> [data1, data2, ... ] : lista de diccionarios con cada conjunto de datos por graficar
         x : distancias en unidades atómicas de distancia
         y : energía en Hartrees
+        label
+        linewidth
     """
     fig, axs = plt.subplots(1, 2, figsize=(15, 5))
     factor = 0.529177249 # unidades atómicas de distancia a Angstroms

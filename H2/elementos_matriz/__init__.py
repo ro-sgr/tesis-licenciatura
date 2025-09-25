@@ -22,7 +22,7 @@ from .un_cuerpo import un_cuerpo
 from .dos_cuerpos import dos_cuerpos
 
 from .elementos_matriz import elementos_matriz
-from .elementos_matriz_distancias import elementos_matriz_distancias
+from .elementos_matriz_rango import elementos_matriz_rango
 from .elementos_H2 import elementos_H2
 
 __all__ = [

@@ -6,7 +6,7 @@
 
 """
 STO-3G (:mod:`H2.g_pqrs`)
-===========================================
+==========================================================================
 
 .. currentmodule:: H2.g_pqrs
 
@@ -16,6 +16,9 @@ Base espín orbital:
     χ2 = ψ+ β
     χ3 = ψ- α
     χ4 = ψ- β
+
+donde ψ+ y ψ- representan los orbitales moleculares ligantes y antiligantes
+donde α y β son el espín arriba (+1/2) y abajo (-1/2)
 """
 
 # Factores

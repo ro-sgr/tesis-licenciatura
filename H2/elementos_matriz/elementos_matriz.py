@@ -10,7 +10,7 @@ from .un_cuerpo import un_cuerpo
 from .dos_cuerpos import dos_cuerpos
 
 
-def elementos_matriz(d: NDArray, a: NDArray, RA: NDArray, RB: NDArray, ZA: int, ZB: int) -> list[float]:
+def elementos_matriz(d: NDArray, a: NDArray, RA: NDArray, RB: NDArray, ZA: float, ZB: float) -> tuple[float]:
     """ Elementos de matriz para H2 con la base STO-3G
 
     Parámetros
