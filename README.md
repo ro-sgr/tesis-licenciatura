@@ -1,3 +1,7 @@
+# tesis-licenciatura-codigo
+
+[![python - 3.13.5](https://img.shields.io/badge/python-3.13.5-3170A1?logo=python&logoColor=ffffff)](https://www.python.org/downloads/release/python-3135/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 <table>
     <tr>
         <td><img src="imgs/Logo_FC.jpg" alt="Left" style="float: center; width: 70%"/></td>
@@ -37,13 +41,15 @@ Los cuadernos de Jupyter (`.ipynb`) explican a detalle el cómo calcular los ele
 
 `(5) VQE.ipynb` Variational Quantum Eigensolver.
 
+`(plt) XYZ.ipynb` Cuaderno con código de las imágenes en la tesis.
+
 ### Scripts
 
 El directorio `H2` se trata de una paquetería la cual contiene todos los scripts (archivos `.py`) con el código de los cuadernos de Jupyter. Cada archivo `lipsum.py` en el directorio `H2` corresponde al cuaderno de Jupyter `(#) lipsum.ipynb`. Ningún script fue escrito pensado para correrse de manera independiente, sino para ser importados desde los cuadernos de Jupyter.
 
 ### Directorios
 
-`imgs/` contiene los gráficas obtenidas para los elementos de matriz así como de las energías de la molécula de hidrógeno para cada uno de los métodos abordados en el presente trabajo.
+`imgs/` contiene las gráficas obtenidas para los elementos de matriz así como de las energías de la molécula de hidrógeno para cada uno de los métodos abordados en el presente trabajo y los logos institucionales.
 
 `data/` contiene archivos `.csv` con diversos conjuntos de datos calculados y empleados a lo largo del código.
 

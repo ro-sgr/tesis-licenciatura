@@ -16,3 +16,7 @@ ipython_config.py
 
 # Virtual environment
 .venv
+
+# IBM credentials
+IBM_crn.txt
+IBM_token.txt
